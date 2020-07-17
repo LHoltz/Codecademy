@@ -1,0 +1,53 @@
+/**create temporary table pulling data for January, February & March **/
+WITH months AS
+(SELECT
+  '2017-01-01' as first_day,
+  '2017-01-31' as last_day
+UNION
+SELECT
+  '2017-02-01' as first_day,
+  '2017-02-28' as last_day
+UNION
+SELECT
+  '2017-03-01' as first_day,
+  '2017-03-31' as last_day
+),
+
+/**created cross_join table joining tables: subscriptions and months **/
+cross_join AS
+(SELECT *
+FROM subscriptions
+CROSS JOIN months),
+
+/**added status table to contain an is_active column **/
+status AS
+(SELECT id, first_day as month,
+CASE
+  WHEN (subscription_start < first_day)
+    AND (
+      subscription_end > first_day
+      OR subscription_end IS NULL
+    ) THEN 1
+  ELSE 0
+END as is_active,
+
+/**added column is_canceled to status table **/
+CASE
+WHEN (subscription_end BETWEEN first_day AND last_day) THEN 1
+ELSE 0
+END AS is_canceled
+FROM cross_join)
+
+/**create status+aggregate table for calculations**/
+status_aggregate AS
+(SELECT
+  month,
+  SUM(is_active) as active,
+  SUM(is_canceled) as canceled
+FROM status
+GROUP BY month)
+
+/**Create the multiple month churn rate calculation**/
+SELECT status_aggregate.month, 
+1.0* status_aggregate.canceled / status_aggregate.active AS 'churn_rate'
+FROM status_aggregate;
