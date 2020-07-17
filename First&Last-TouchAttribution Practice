@@ -1,0 +1,18 @@
+WITH last_touch AS(
+  SELECT user_id,
+   MAX(timestamp) AS 'last_touch_at'
+FROM page_visits
+GROUP BY user_id),
+
+first_touch AS (
+    SELECT user_id,
+       MIN(timestamp) AS 'first_touch_at'
+    FROM page_visits
+    GROUP BY user_id)
+
+SELECT lt.user_id, lt.last_touch_at, pv.utm_source, ft.first_touch_at
+FROM last_touch AS 'lt'
+JOIN page_visits AS 'pv'
+  on lt.user_id = pv.user_id
+JOIN first_touch AS 'ft'
+  on pv.user_id = ft.user_id;
