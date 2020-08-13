@@ -1,0 +1,36 @@
+#create list called toppings
+toppings = ['pepperoni', 'pineapple', 'cheese', 'sausage', 'olives', 'anchovies', 'mushrooms']
+
+#create list called prices
+prices = [2, 6, 1, 3, 2, 7, 2]
+
+#find length of toppings list and store as new variable num_pizzas
+num_pizzas = len(toppings)
+
+#Print string
+print("We sell " + str(num_pizzas) + " different kinds of pizza!")
+
+#use zip to combine the two lists
+pizzas = list(zip(prices, toppings))
+
+#print pizzas
+print(pizzas)
+
+#sort pizzas
+pizzas.sort()
+
+#store the first element of pizzas in a variable called cheapest_pizza
+cheapest_pizza = pizzas[0]
+
+#get the last item of the pizzas list and store it in priceiest_pizza
+priciest_pizza = pizzas[-1]
+
+#store three lowest cost pizzas in a list called three_cheapest
+three_cheapest = pizzas[:3]
+
+#print three cheapest list
+print(three_cheapest)
+
+#count number of occurence of 2 in the prices list
+num_two_dollar_slices = prices.count(2)
+print(num_two_dollar_slices)
