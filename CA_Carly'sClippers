@@ -1,0 +1,51 @@
+hairstyles = ["bouffant", "pixie", "dreadlocks", "crew", "bowl", "bob", "mohawk", "flattop"]
+
+prices = [30, 25, 40, 20, 20, 35, 50, 35]
+
+last_week = [2, 3, 5, 8, 4, 4, 6, 2]
+
+#create a variable total_price and set it to 0
+total_price = 0
+
+#iterate through the prices list and add each price to the variable total_price
+for price in prices:
+  total_price += price
+   
+#create average_price variable that is total_price divided by # of prices
+average_price = total_price / (len(prices))
+
+#print value of average_price
+print("Average Haircut Price: " + str(average_price))
+
+#make a list called new_prices, which has each element in prices minus 5
+new_prices = [price - 5 for price in prices]
+
+#print new_prices
+print(new_prices)
+
+#REVENUE
+#create total_revenue and set to 0
+total_revenue = 0
+
+#use a for loop to create a variable I that goes from 0 to len(hairstyles)
+for i in hairstyles:
+  i = range(0, len(hairstyles))
+
+#add the product of prices[i] and last_week [i] to total_revenue at each step
+for i in range(len(hairstyles)):
+  total_revenue += prices[i] * last_week[i]
+
+#print total revenue
+print("Total Revenue: " + str(total_revenue))
+
+#find daily revenue and print it out
+average_daily_revenue = total_revenue / 7
+print(average_daily_revenue)
+
+#create list called cuts under 30 that has the entry hairstyles[i] for each I for which new_price[i] is less than 30
+cuts_under_30 = [hairstyles[i] for i in range(len(new_prices)-1) if new_prices[i] < 30]
+
+#print it out
+print(cuts_under_30)
+
+
